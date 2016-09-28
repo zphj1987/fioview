@@ -8,20 +8,36 @@ import csv
 import codecs 
 
 def main():
-    print "fio版本,%s"  %(str(getjsonresult()["fio version"]))
-    print('Unix时间,%s'  %(str(getjsonresult()["timestamp"]))) 
-    print('时间,%s'  %(str(getjsonresult()["time"]))) 
+#版本
+    fio_version=str(getjsonresult()["fio version"])
+#unix时间
+    unix_time=str(getjsonresult()["timestamp"])
+#时间
+    time=str(getjsonresult()["time"])
+#读取带宽
     read_bw=str(getjsonresult()["jobs"][0]["read"]["bw"])
+#读取IOPS
+    read_iops=str(getjsonresult()["jobs"][0]["read"]["iops"])
+#读取运行时间
+    read_runtime=str(getjsonresult()["jobs"][0]["read"]["runtime"])
+
+
+    print( "fio版本,%s"  %(fio_version))
+    print('Unix时间,%s'  %(unix_time))            
+    print('时间,%s'  %(time))
     print('Read BW,%s'  %(read_bw))
+    print('Read Iops,%s'  %(read_iops))
+    print('Read Runtime,%s'  %(read_bw))
 
     with open('fio.csv', 'wb') as csvfile:
         csvfile.write(codecs.BOM_UTF8)  
         spamwriter = csv.writer(csvfile, dialect='excel')
-#        spamwriter.writerow(['fio版本']+[str(getjsonresult()["fio version"])])
-        spamwriter.writerow(['fio版本',str(getjsonresult()["fio version"])])
-        spamwriter.writerow(['Unix时间',str(getjsonresult()["timestamp"])])
-        spamwriter.writerow(['时间',str(getjsonresult()["time"])])
+        spamwriter.writerow(['fio版本',fio_version])
+        spamwriter.writerow(['Unix时间',unix_time])
+        spamwriter.writerow(['时间',time])
         spamwriter.writerow(['Read BW',read_bw])
+        spamwriter.writerow(['Read Iops',read_iops])
+        spamwriter.writerow(['Read Runtime',read_runtime])
 
 
 
